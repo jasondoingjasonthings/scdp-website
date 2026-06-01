@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sterling Cooper Draper Pryce</title>
+<meta name="description" content="Sterling Cooper Draper Pryce — Integrated Brand Experience Agency, Brisbane." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;1,400;1,500&family=Pinyon+Script&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:        #0F0C09;
+    --ink-2:      #15110C;
+    --cream:      #F0EDE8;
+    --cream-dim:  #B6AEA2;
+    --gold:       #C8B89A;
+    --gold-label: #B8986A;
+    --hair:       rgba(200,184,154,0.18);
+    --navy:       #0D1F2D;
+    --teal:       #2DD4B0;
+    --serif:  "Playfair Display", Georgia, serif;
+    --script: "Pinyon Script", cursive;
+    --sans:   "DM Sans", system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--navy);
+    font-family: var(--serif);
+    color: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ============================================================
+     WTTF — the reveal, sitting underneath the whole time
+  ============================================================ */
+  #wttf {
+    position: fixed; inset: 0; z-index: 1;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 8vh 6vw;
+  }
+  .wttf-dot {
+    width: 92px; height: 92px; border-radius: 50%;
+    background: var(--teal);
+    margin-bottom: 46px;
+    animation: breathe 4s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(1.0);  box-shadow: 0 0 60px -10px rgba(45,212,176,0.35); }
+    50%     { transform: scale(1.04); box-shadow: 0 0 90px  -6px rgba(45,212,176,0.55); }
+  }
+  .wttf-mark {
+    font-family: var(--sans); font-weight: 400;
+    font-size: 11px; letter-spacing: 0.42em; text-indent: 0.42em;
+    color: var(--cream); margin-bottom: 38px;
+  }
+  .wttf-line {
+    font-family: Georgia, var(--serif); font-style: italic;
+    font-size: clamp(1.6rem, 4.2vw, 2.1rem);
+    color: var(--cream); margin-bottom: 54px;
+  }
+  .wttf-contact {
+    font-family: var(--sans); font-weight: 400;
+    font-size: 13px; letter-spacing: 0.04em; color: var(--teal);
+  }
+  .wttf-contact a { color: var(--teal); text-decoration: none; }
+  .wttf-contact a:hover { text-decoration: underline; }
+  .wttf-dare {
+    position: fixed; left: 0; right: 0; bottom: 42px;
+    font-family: Georgia, var(--serif); font-style: italic;
+    font-size: 20px; color: var(--cream); text-align: center;
+    z-index: 2;
+  }
+
+  /* ============================================================
+     SCDP — the long-scroll, on top, gets torn away
+  ============================================================ */
+  #scdp {
+    position: fixed; inset: 0; z-index: 5;
+    overflow-y: auto; overflow-x: hidden;
+    background: radial-gradient(120% 80% at 50% -10%, #1b150f 0%, var(--ink) 55%) fixed;
+    transform-origin: top center;
+    will-change: transform, clip-path, filter;
+  }
+  #scdp::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+    opacity: 0.05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  #scdp.tearing {
+    transition:
+      transform 1.5s cubic-bezier(0.62, 0.02, 0.9, 0.28),
+      clip-path 1.4s cubic-bezier(0.62, 0.02, 0.9, 0.28),
+      filter    1.5s ease-in;
+    transform: perspective(1400px) translateY(-122%) rotateX(11deg) scale(1.04);
+    filter: drop-shadow(0 28px 46px rgba(0,0,0,0.55));
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #scdp.tearing {
+      transition: opacity .8s ease, transform .8s ease;
+      transform: translateY(-6%); opacity: 0; clip-path: none !important;
+    }
+  }
+
+  .scdp-inner { position: relative; }
+
+  .beat {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: clamp(90px,15vh,180px) clamp(22px,6vw,90px);
+    position: relative;
+  }
+  .beat + .beat { border-top: 1px solid var(--hair); }
+  .wrap { max-width: 1180px; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--sans); font-weight: 400;
+    font-size: 12px; letter-spacing: 0.34em; text-indent: 0.34em;
+    color: var(--gold-label); text-transform: uppercase;
+  }
+
+  /* Beat 1 — Hero */
+  .monogram {
+    position: fixed; top: 34px; left: 50%; transform: translateX(-50%);
+    font-family: var(--sans); font-weight: 500;
+    font-size: 13px; letter-spacing: 0.5em; text-indent: 0.5em;
+    color: var(--gold-label); z-index: 40;
+  }
+  .hero-name {
+    font-weight: 800; line-height: 0.92;
+    font-size: clamp(2.9rem, 8.8vw, 7.3rem);
+    letter-spacing: -0.01em; color: var(--cream);
+    margin: 30px 0 38px;
+  }
+  .hero-name span { display: block; }
+  .hero-name .we {
+    font-weight: 500; font-size: 0.46em; letter-spacing: 0.08em;
+    color: var(--cream-dim); margin-bottom: 0.18em;
+  }
+  .hero-sub {
+    font-style: italic; font-weight: 400;
+    font-size: clamp(1.4rem, 3.4vw, 2.2rem); color: var(--cream);
+    line-height: 1.35;
+  }
+  .hero-sub .small {
+    display: block; font-size: 0.66em; color: var(--cream-dim); margin-top: 0.5em;
+  }
+  .script {
+    font-family: var(--script); color: var(--gold);
+    line-height: 1.1;
+  }
+  .hero-script { font-size: clamp(2rem, 5.2vw, 3.3rem); margin-top: 48px; }
+  .scroll-cue {
+    position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.3em;
+    color: var(--gold-label); opacity: 0.7;
+  }
+
+  /* Beat 2 — Manifesto */
+  .beat-manifesto { background: var(--ink-2); }
+  .manifesto {
+    font-style: italic; font-weight: 400;
+    font-size: clamp(1.45rem, 2.9vw, 2.35rem); line-height: 1.5;
+    max-width: 960px; margin: 0 auto; color: var(--cream);
+    text-wrap: pretty;
+  }
+  .attribution {
+    font-family: var(--script); color: var(--gold);
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin-top: 46px;
+  }
+
+  /* Beat 3 — Services */
+  .service {
+    font-weight: 700; line-height: 1.04;
+    font-size: clamp(2.2rem, 6.2vw, 4.7rem); color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+  .service + .service { margin-top: 0.12em; }
+  .service-note {
+    font-family: var(--sans); font-weight: 300; font-style: normal;
+    font-size: clamp(0.95rem, 1.7vw, 1.15rem); color: var(--cream-dim);
+    margin-top: 42px; letter-spacing: 0.01em;
+  }
+
+  /* Beat 4 — Proof */
+  .testimonial {
+    font-family: var(--script); color: var(--gold);
+    font-size: clamp(2.3rem, 6.4vw, 4.2rem); line-height: 1.18;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .testimonial-by {
+    font-family: var(--sans); font-weight: 300;
+    font-size: 13px; letter-spacing: 0.06em; color: var(--cream-dim);
+    margin-top: 34px;
+  }
+  .awards {
+    list-style: none; margin: 96px auto 0; max-width: 760px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .awards li {
+    font-family: var(--sans); font-weight: 300;
+    font-size: 13px; letter-spacing: 0.02em; color: var(--cream-dim);
+  }
+
+  /* Beat 5 — Final */
+  .final-line {
+    font-weight: 700; line-height: 1.06;
+    font-size: clamp(2rem, 5.6vw, 4.3rem); color: var(--cream);
+    letter-spacing: -0.005em;
+  }
+  .final-line + .final-line { margin-top: 0.1em; }
+  .final-line.gold { color: var(--gold); }
+  .flourish {
+    font-family: var(--script); color: var(--gold);
+    font-size: clamp(1.9rem, 4.6vw, 3rem); margin-bottom: 18px;
+  }
+
+  /* ============================================================
+     Preview controls — faint, bottom-right corner
+     Remove before sending live if not wanted
+  ============================================================ */
+  #preview {
+    position: fixed; right: 18px; bottom: 18px; z-index: 120;
+    display: flex; gap: 10px; align-items: center;
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.08em;
+    color: rgba(240,237,232,0.5);
+    opacity: 0.35; transition: opacity .25s ease;
+  }
+  #preview:hover { opacity: 1; }
+  #preview button {
+    font: inherit; letter-spacing: inherit;
+    color: var(--teal); background: transparent;
+    border: 1px solid rgba(45,212,176,0.5); border-radius: 999px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  #preview button:hover { background: rgba(45,212,176,0.12); }
+</style>
+</head>
+<body>
+
+  <!-- WTTF reveal (underneath) -->
+  <section id="wttf" aria-hidden="true">
+    <div class="wttf-dot"></div>
+    <div class="wttf-mark">WELCOME TO THE FOLD</div>
+    <div class="wttf-line">We do the work.</div>
+    <div class="wttf-contact">
+      <a href="mailto:jason@wttf.com.au">jason@wttf.com.au</a>
+      &nbsp;&middot;&nbsp;
+      <a href="tel:0413766520">0413 766 520</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://wttf.com.au" target="_blank" rel="noopener">wttf.com.au</a>
+    </div>
+  </section>
+  <p class="wttf-dare">I dare you.</p>
+
+  <!-- SCDP (on top, torn away) -->
+  <main id="scdp">
+    <div class="monogram">S &middot; C &middot; D &middot; P</div>
+    <div class="scdp-inner">
+
+      <!-- Beat 1 — Hero -->
+      <section class="beat">
+        <div class="wrap">
+          <h1 class="hero-name">
+            <span class="we">WE ARE</span>
+            <span>STERLING COOPER</span>
+            <span>DRAPER PRYCE.</span>
+          </h1>
+          <p class="hero-sub">
+            We don't make ads. We make invoices.
+            <span class="small">&hellip;and they are absolutely enormous.</span>
+          </p>
+          <p class="script hero-script">Inspiring brands to impact the conversation since 2009.</p>
+        </div>
+        <div class="scroll-cue">SCROLL</div>
+      </section>
+
+      <!-- Beat 2 — Manifesto -->
+      <section class="beat beat-manifesto">
+        <div class="wrap">
+          <p class="manifesto">
+            We believe the most powerful brands are not built &mdash; they are felt. In an era of
+            radical distraction, we create the conditions for meaning to emerge through narrative
+            ecosystems that reflect a brand&rsquo;s deepest emotional truth. We don&rsquo;t run campaigns.
+            We don&rsquo;t make content. We architect the inevitable. This is our commitment. This has
+            always been our commitment. The invoice reflects this commitment.
+          </p>
+          <p class="attribution">&mdash; Dominic Marchetti, Chief Purpose Officer (formerly)</p>
+        </div>
+      </section>
+
+      <!-- Beat 3 — Services -->
+      <section class="beat">
+        <div class="wrap">
+          <p class="service">Narrative Architecture</p>
+          <p class="service">Brand Velocity</p>
+          <p class="service">Strategic Retreat Facilitation</p>
+          <p class="service-note">(Two-day minimum. Outcomes guaranteed or meaningfully reframed.)</p>
+        </div>
+      </section>
+
+      <!-- Beat 4 — Proof -->
+      <section class="beat">
+        <div class="wrap">
+          <blockquote class="testimonial">
+            &ldquo;We didn&rsquo;t fully understand what we&rsquo;d bought,<br />but the invoice was very clear.&rdquo;
+          </blockquote>
+          <p class="testimonial-by">&mdash; Head of Communications, Client name withheld (NDA)</p>
+          <ul class="awards">
+            <li>Effies Australia &mdash; Finalist, Purpose-Led Campaign, 2021</li>
+            <li>Creative Circle &mdash; Shortlisted, Integrated Campaign, 2021</li>
+            <li>AWARD Awards &mdash; Shortlisted, Brand Identity, 2021</li>
+            <li>Cannes Lions &mdash; Shortlisted, Branded Content, 2021</li>
+            <li>Melbourne AWARD Awards &mdash; Certificate of Entry, 2017</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Beat 5 — Final wank -->
+      <section class="beat">
+        <div class="wrap">
+          <p class="flourish">And we&rsquo;re only getting started.</p>
+          <p class="final-line">WE LEAD THE CHANGE.</p>
+          <p class="final-line">WE INSPIRE THE CONVERSATION.</p>
+          <p class="final-line">WE ARCHITECT THE INEVITABLE.</p>
+          <p class="final-line gold">WE INVOICE THE DIFFERENCE.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Preview controls — faint, bottom-right. Press T to tear, R to replay. -->
+  <div id="preview">
+    <span id="pv-status">tears in 10s</span>
+    <button id="pv-tear">tear now</button>
+    <button id="pv-replay">replay</button>
+  </div>
+
+<script>
+(function () {
+  var scdp      = document.getElementById('scdp');
+  var status    = document.getElementById('pv-status');
+  var DELAY     = 10000;   // 10s from load
+  var DURATION  = 1600;    // settle time before hiding
+  var N         = 72;      // ragged-edge resolution
+  var BASE      = 44;      // tear baseline (% of viewport height)
+  var torn      = false;
+  var timer     = null;
+  var countdown = null;
+
+  function poly(yFor) {
+    var pts = ['0% 0%', '100% 0%'];
+    for (var i = 0; i <= N; i++) {
+      var x = (100 - (i / N * 100)).toFixed(2);
+      pts.push(x + '% ' + yFor(i).toFixed(2) + '%');
+    }
+    return 'polygon(' + pts.join(',') + ')';
+  }
+
+  var fullClip = poly(function () { return 100; });
+  var tearEdge = null;
+
+  function makeEdge() {
+    return poly(function (i) {
+      var coarse = Math.sin(i * 0.55) * 3.2 + Math.sin(i * 0.17) * 2.4;
+      var fine   = (Math.random() * 2 - 1) * 2.6;
+      var spike  = (Math.random() < 0.12) ? (Math.random() * 4) : 0;
+      return BASE + coarse + fine + spike;
+    });
+  }
+
+  function setReady() {
+    scdp.style.clipPath = fullClip;
+    scdp.style.webkitClipPath = fullClip;
+  }
+  setReady();
+
+  function tear() {
+    if (torn) return;
+    torn = true;
+    clearTimeout(timer);
+    clearInterval(countdown);
+    status.textContent = 'torn';
+    tearEdge = makeEdge();
+    requestAnimationFrame(function () {
+      scdp.classList.add('tearing');
+      scdp.style.clipPath = tearEdge;
+      scdp.style.webkitClipPath = tearEdge;
+    });
+    setTimeout(function () {
+      scdp.style.visibility = 'hidden';
+    }, DURATION);
+  }
+
+  function arm() {
+    clearTimeout(timer);
+    clearInterval(countdown);
+    var left = DELAY / 1000;
+    status.textContent = 'tears in ' + left + 's';
+    countdown = setInterval(function () {
+      left--;
+      if (left > 0) status.textContent = 'tears in ' + left + 's';
+    }, 1000);
+    timer = setTimeout(tear, DELAY);
+  }
+
+  function replay() {
+    torn = false;
+    scdp.classList.remove('tearing');
+    scdp.style.transition   = 'none';
+    scdp.style.transform    = 'none';
+    scdp.style.filter       = 'none';
+    scdp.style.visibility   = 'visible';
+    scdp.scrollTop          = 0;
+    setReady();
+    void scdp.offsetWidth;   // force reflow
+    scdp.style.transition   = '';
+    scdp.style.transform    = '';
+    scdp.style.filter       = '';
+    arm();
+  }
+
+  document.getElementById('pv-tear').addEventListener('click', tear);
+  document.getElementById('pv-replay').addEventListener('click', replay);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 't' || e.key === 'T') tear();
+    if (e.key === 'r' || e.key === 'R') replay();
+  });
+
+  arm();
+}());
+</script>
+</body>
+</html>
